@@ -1,5 +1,5 @@
 {
-  "name": "collaborative-editor-automerge",
+  "name": "peer-to-peer-collaborative-editor",
   "version": "1.0.0",
   "description": "",
   "main": "peer.js",
@@ -9,9 +9,12 @@
     "fully-connected-topology": "^1.1.1",
     "stream-set": "^1.1.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^5.2.0"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "keywords": [],
   "author": "",

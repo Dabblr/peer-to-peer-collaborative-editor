@@ -95,6 +95,30 @@ Automerge guarantees that "whenever any two documents have applied the same set 
 Therefore, as long as every peer eventually commits their local changes, all peers will have applied the same set of changes to their document and consequently, they will all have the same document state. 
 
 ## Limitations
-So far, a key limitation with Automerge seems to be creating the initial empty document. It's possible we may have overlooked this detail somewhere in the documentation, but it appears that if two peers both perform edits on an empty document, and then commit them, errors will arise when trying to merge the two.
+So far, a key limitation with Automerge seems to be creating the initial empty document. It's possible we may have overlooked this detail somewhere in the documentation, but it appears that if two peers both perform edits on an empty document that they each initialized, and then commit them, changes will get overwritten when trying to merge the two.
 
-As long as only one peer makes the initial change to an empty document and then commits it to all other peers, the order of edits does not seem to matter after this point and the program runs smoothly. 
+However, as long as only one peer makes the initial change to an empty document and then commits it to all other peers, the order of edits does not seem to matter after this point and the program runs smoothly. 
+
+A test that demonstrates this limitation is presented in the `test` folder, see the Tests section for more details.
+
+## Tests
+Tests are contained in the `test` folder and are written using `mocha`. The tests verify correctness of some parts of Automerge as well as functions written in this repository.
+
+### Running the Tests
+To run the tests, use the following command: `npm test`  
+It will run the entire test suite and indicate which tests failed and which passed. Note that one of the tests in `file creation` should fail due to the limitations described earlier.
+
+### Automerge
+The `applyChanges()` function of Automerge is tested in `testApplyChanges.js`. This function takes an existing document and applies a set of changes to it.   
+The results of these tests indicate that Automerge is able to correctly apply changes from other peers on top of empty documents and documents where local changes have been made that the sending peer did not have. It also verifies that changes applied in either order (either peer -> local or local -> peer) result in the same document.
+
+### Converting User JSON to Document Changes
+The `changeDoc()` function in `changes.js` is tested in `testChangeDoc.js`. This function takes a JSON oject from the user that is either an insert, append, or delete operation and applies it to a document. It also initializes the document with text if it has not yet been initialized.   
+The results of these tests indicate that `changeDoc()` is able to correctly insert and append on both an empty and non-empty document. It also verifies that `changeDoc()` is able to correctly delete from a non-empty document. In the case of an empty document, the tests also show that the function initializes the document with text.
+
+### Limitations
+The tests in `testFileCreation.js` explore the limitation mentioned earlier. In the first test, we create our first document which is initialized with text. This change is then applied to a second document. We then add the word "hello" to the first document and add "hi" to the second document. The changes made to the first document are then applied to the second document and vice versa. After merging, we can see that both documents agree on the same file content and contain either "hellohi" or "hihello".
+
+In the second test, we try to do the same thing but with two separately created documents. We create the first document, initialize it with text, and add the word "hello" to it. We also create a second document, initialize it with text, and add the word "hi" to it. All the changes made in the first document are then applied to the second document and vice versa. After merging, both documents agree on a value but it is not the concatenation of their two strings, instead it is either just "hello" or "hi". 
+
+Only the changes from one of the two documents remains after merging. This appears to contradict the Automerge documentation which states that "If two users concurrently insert at the same position, Automerge will arbitrarily place one of the insertions first and the other second, while ensuring that the final order is the same on all nodes." It remains unclear why this happens only when the two documents are separately initialized.

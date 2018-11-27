@@ -1,10 +1,5 @@
 const automerge = require('automerge')
 
-// Applies the changes from a peer to the given document and returns the new document.
-exports.applyChangesFromPeer = function(changes, doc) {
-    return automerge.applyChanges(doc, changes)
-};
-
 // Updates the given document with the changes from the user.
 exports.changeDoc = function(data, document, created){
     return automerge.change(document, doc =>{
@@ -29,9 +24,4 @@ exports.changeDoc = function(data, document, created){
             doc.text.deleteAt(index)
         }
     })
-};
-
-// Returns all changes that have been made on the new doc since the old doc.
-exports.getChanges = function(oldDoc, newDoc){
-    return automerge.getChanges(oldDoc, newDoc)
 };

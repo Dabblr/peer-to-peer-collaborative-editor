@@ -40,12 +40,13 @@ function parse(data){
 
     if (data.operation == "commit") {
         // Get changes since last commit.
-        localChanges = changes.getChanges(doc, localDoc)
+        localChanges = automerge.getChanges(doc, localDoc)
         // Apply changes to doc. 
         doc = automerge.applyChanges(doc, localChanges)
         // Send local changes to peers.
         sendToPeers(localChanges)
     } else if (data.operation == "insert" || data.operation == "delete" || data.operation == "append"){
+        // Update the local document with the changes.
         localDoc = changes.changeDoc(data, localDoc, docCreated)
         docCreated = true
     }
@@ -57,7 +58,7 @@ swarm.on('connection', function(socket) {
     socket = jsonStream(socket)
     streams.add(socket)
     socket.on('data', function(data){
-        localDoc = changes.applyChangesFromPeer(data, localDoc)
+        localDoc = automerge.applyChanges(localDoc, data)
         docCreated = true
         console.log("File content: " + localDoc.text.join(''))
     })
