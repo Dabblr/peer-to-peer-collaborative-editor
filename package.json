@@ -1,0 +1,19 @@
+{
+  "name": "collaborative-editor-automerge",
+  "version": "1.0.0",
+  "description": "",
+  "main": "peer.js",
+  "dependencies": {
+    "automerge": "^0.9.2",
+    "duplex-json-stream": "^1.0.1",
+    "fully-connected-topology": "^1.1.1",
+    "stream-set": "^1.1.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
