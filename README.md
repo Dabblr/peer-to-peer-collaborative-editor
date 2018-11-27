@@ -99,7 +99,7 @@ So far, a key limitation with Automerge seems to be creating the initial empty d
 
 However, as long as only one peer makes the initial change to an empty document and then commits it to all other peers, the order of edits does not seem to matter after this point and the program runs smoothly. 
 
-A test that demonstrates this limitation is presented in the `test` folder, see the Tests section for more details.
+A test that demonstrates this limitation is presented in the `test` folder, see the following section for more details.
 
 ## Tests
 Tests are contained in the `test` folder and are written using `mocha`. The tests verify correctness of some parts of Automerge as well as functions written in this repository.
