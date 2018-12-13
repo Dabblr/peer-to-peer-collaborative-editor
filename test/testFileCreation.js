@@ -47,7 +47,7 @@ describe('file creation', function() {
     })
 
     // This test does not pass due to the limitations mentioned in README.md
-    it ('should return merged changes when two documents are created and their changes are exchanged', function() {
+    it ('should return merged changes when two documents are created and their changes are exchanged (expected to fail)', function() {
         // Create document 1.
         var str1 = "hello"
         doc1 = automerge.change(automerge.init(), 'initialize document', doc => {
