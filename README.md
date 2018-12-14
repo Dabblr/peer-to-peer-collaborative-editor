@@ -1,6 +1,6 @@
 # Peer-to-Peer Collaborative Editor
 
-This repository uses the [Automerge](https://github.com/automerge/automerge) library to implement a simple command-line peer-to-peer collaborative text editor in Node.js. Automerge uses **C**onflict-Free **R**eplicated **D**ata **T**ypes (CRDTs) to build collaborative applications. Its text editing support is currently experimental, which is why we thought it would be interesting to test out.
+This application uses the [Automerge](https://github.com/automerge/automerge) library to implement a simple command-line peer-to-peer collaborative text editor in Node.js. Automerge uses **C**onflict-Free **R**eplicated **D**ata **T**ypes (CRDTs) to build collaborative applications. Its text editing support is currently experimental, which is why we thought it would be interesting to test out.
 
 The goal of this implementation is purely to test out the CRDT approach used in Automerge and see how it compares to the Operational Transform approach we are using in our traditional client-server [collaborative text editor](https://github.com/Dabblr/Concurrent-Document-Editor). It is *not* a fully-fledged collaborative editor, there is no user-friendly GUI, and all commands must be entered as raw JSON on the terminal.
 
